@@ -1,0 +1,23 @@
+#splash {
+    font-family: "Neonderthaw", cursive;
+    font-size: 30px;
+    position: fixed;
+    width: 99%;
+    height: 100%;
+    z-index: 100;
+    text-align: center;
+    color: #ffa145;
+    background: #e6e4e3;
+}
+
+#splash-logo {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    transform: translate(-50%,-50%);
+}
+
+#splash-logo img {
+    height: 50px;
+    width: 50px;
+}
