@@ -2,7 +2,7 @@
 
 /* 背景 */
 #container {
-    background-image:url(../images/2.jpg);
+    background-image:url(../design/2.jpg);
     position:relative;
     background-position: top center;
     box-shadow:  0 0 5px 0 #62574bd9;
@@ -27,7 +27,7 @@
     max-width: 620px;
     margin: 20px auto 40px;
     font-family: 'Zeyada', cursive;
-    background-image: url(../images/1.jpg);
+    background-image: url(../design/1.jpg);
     background-size: 290px 80px;
     background-position: top center;
     background-repeat: no-repeat;
