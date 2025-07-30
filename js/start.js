@@ -1,4 +1,4 @@
-// rogin
+// login
 $(window).on('load',function(){
     $("#splash-logo img").delay(2600).fadeOut('slow');
     $("#splash").delay(2300).fadeOut('slow',function(){
