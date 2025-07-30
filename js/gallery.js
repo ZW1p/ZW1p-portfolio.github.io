@@ -28,20 +28,23 @@ $(window).on('load', function () {
       $('.grid .item a')
         .attr('data-lightbox', 'group-all')
         .removeAttr('data-title');
-    } else {
-      grid.filter('.sort' + getSortNumberFromFilter(filter));
-      const visibleItems = grid.getItems().filter(item => item.isVisible());
-      
-      // 一旦全部 group-all に戻す（全部リセット）
-      $('.grid .item a').attr('data-lightbox', 'group-all');
-
-      // 今表示されてるアイテムに group-filter をセット
-      visibleItems.forEach(item => {
-      $(item.getElement()).find('a')
-        .attr('data-lightbox', 'group-' + filter);
       });
-    }
-  });
+    } else {
+      grid.filter('.sort' + getSortNumberFromFilter(filter),{
+      onFinish: () => {
+        // 一旦全部 group-all にリセット
+        $('.grid .item a').attr('data-lightbox', 'group-all');
+
+        // 表示中アイテムだけ、フィルター専用グループに設定
+        const visibleItems = grid.getItems().filter(item => item.isVisible());
+        visibleItems.forEach(item => {
+          $(item.getElement()).find('a')
+            .attr('data-lightbox', 'group-' + filter);
+        });
+      }
+    });
+  }
+});
   
   const pagetop = $('#page-top');
   
