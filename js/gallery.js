@@ -27,15 +27,18 @@ $(window).on('load', function () {
       // すべての画像を同じグループに設定（全画像がスライド表示対象になる）
       $('.grid .item-content a').attr('data-lightbox', 'group-all');
     } else {
-      grid.filter('.sort' + getSortNumberFromFilter(filter));
+      const sortClass = '.sort' + getSortNumberFromFilter(filter);
+
+      grid.filter(sortClass);
       
       // フィルターごとにlightboxグループ名を変える（sceneなら group-scene など）
-      $('.grid .item-content a').each(function () {
-        const $item = $(this).closest('.item');
-        if ($item.hasClass('sort' + getSortNumberFromFilter(filter))) {
-          $(this).attr('data-lightbox', 'group-' + filter);
+      $('.grid .item').each(function () {
+        const $link = $(this).find('a');
+        
+        if ($this.hasClass('sort' + getSortNumberFromFilter(filter))) {
+          $link.attr('data-lightbox', 'group-' + filter);
         } else {
-          $(this).removeAttr('data-lightbox'); // 他のは表示対象外
+          $link.removeAttr('data-lightbox'); // 他のは表示対象外
         }
       });
     }
