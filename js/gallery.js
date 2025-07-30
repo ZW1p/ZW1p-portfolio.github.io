@@ -22,23 +22,23 @@ $(window).on('load', function () {
     const filter = $(this).data('filter'); //  "scene" など
 
     if (filter === 'all') {
-      grid.show(); // すべて表示
-    } else {
-      // 各アイテムの class="item sort01" などに対応
-      grid.filter('.sort' + getSortNumberFromFilter(filter));
-    }
-
-    $('a[data-group]').each(faunction() {
-      const group = $(this).data('group');
+      grid.show();
       
-      if (filter === 'all') {
-        $(this).attr('data-lightbox', 'all');
-      } else if (group === filter) {
-        $(this).attr('data-lightbox', filter);
-      } else {
-        $(this).removeAttr('data-lightbox'); // グループ外の画像はlightbox対象外
-      }
-    });
+      // すべての画像を同じグループに設定（全画像がスライド表示対象になる）
+      $('.grid .item-content a').attr('data-lightbox', 'group-all');
+    } else {
+      grid.filter('.sort' + getSortNumberFromFilter(filter));
+      
+      // フィルターごとにlightboxグループ名を変える（sceneなら group-scene など）
+      $('.grid .item-content a').each(function () {
+        const $item = $(this).closest('.item');
+        if ($item.hasClass('sort' + getSortNumberFromFilter(filter))) {
+          $(this).attr('data-lightbox', 'group-' + filter);
+        } else {
+          $(this).removeAttr('data-lightbox'); // 他のは表示対象外
+        }
+      });
+    }
   });
 
   // data-filter の値 → sortクラスに対応する番号を返す
