@@ -27,6 +27,18 @@ $(window).on('load', function () {
       // 各アイテムの class="item sort01" などに対応
       grid.filter('.sort' + getSortNumberFromFilter(filter));
     }
+
+    $('a[data-group]').each(faunction() {
+      const group = $(this).data('group');
+      
+      if (filter === 'all') {
+        $(this).attr('data-lightbox', 'all');
+      } else if (group === filter) {
+        $(this).attr('data-lightbox', filter);
+      } else {
+        $(this).removeAttr('data-lightbox'); // グループ外の画像はlightbox対象外
+      }
+    });
   });
 
   // data-filter の値 → sortクラスに対応する番号を返す
