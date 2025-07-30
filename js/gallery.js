@@ -25,30 +25,24 @@ $(window).on('load', function () {
       grid.show();
       
       // 全アイテムに共通グループを設定
-      $('.grid .item a').attr('data-lightbox', 'group-all');
-    } else {
-      grid.filter('.sort' + getSortNumberFromFilter(filter));
-      
-      // 一旦全ての data-lightbox を削除
-      $('.grid .item a').removeAttr('data-lightbox');
-      
-      // Muuri で表示されてる要素にだけ付け直す
-      const visibleItems = grid.getItems().filter(item => item.isVisible());
-      visibleItems.forEach(item => {
-        $(item.getElement()).find('a').attr('data-lightbox', 'group-' + filter);
-      });
-    }
-    
-  // data-filter の値 → sortクラスに対応する番号を返す
-  function getSortNumberFromFilter(filter) {
-    switch (filter) {
-      case 'scene': return '01';
-      case 'plant': return '02';
-      case 'life':  return '03';
-      default:      return '00'; // all
-    }
-  }
-});
+      $('.grid .item a')
+    .attr('data-lightbox', 'group-all')
+    .removeAttr('data-title'); // おまけ（タイトルもリセット）
+
+} else {
+  grid.filter('.sort' + getSortNumberFromFilter(filter));
+
+  const visibleItems = grid.getItems().filter(item => item.isVisible());
+
+  // 一旦全部 group-all に戻す（全部リセット）
+  $('.grid .item a').attr('data-lightbox', 'group-all');
+
+  // 今表示されてるアイテムに group-filter をセット
+  visibleItems.forEach(item => {
+    $(item.getElement()).find('a')
+      .attr('data-lightbox', 'group-' + filter);
+  });
+}
 
 $(function () {
   const pagetop = $('#page-top');
