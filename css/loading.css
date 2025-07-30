@@ -1,23 +1,36 @@
 #splash {
-    font-family: "Neonderthaw", cursive;
-    font-size: 30px;
     position: fixed;
     width: 99%;
     height: 100%;
+    margin: 0, 50px;
     z-index: 100;
-    text-align: center;
-    color: #ffa145;
+    color: #9b8d7c;
     background: #e6e4e3;
+    font-family: 'Courier';
+    font-size: 15px;
 }
 
-#splash-logo {
+.typing{
+    width: 60ch;
+    height:35px;
+    animation: typing 1.5s steps(16), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
     position: absolute;
-    top: 45%;
-    width: 100%;
-    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-
-#splash-logo img {
-    height: 50px;
-    width: 50px;
+ 
+@keyframes typing {
+    from {
+        width: 0
+    }
+}
+    
+@keyframes blink {
+    50% {
+        border-color: transparent
+    }
 }
