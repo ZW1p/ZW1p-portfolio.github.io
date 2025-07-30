@@ -24,23 +24,16 @@ $(window).on('load', function () {
     if (filter === 'all') {
       grid.show();
       
-      // すべての画像を同じグループに設定（全画像がスライド表示対象になる）
-      $('.grid .item-content a').attr('data-lightbox', 'group-all');
+      // すべてのaタグに group-all を設定
+    $('.grid .item a').attr('data-lightbox', 'group-all');
     } else {
-      const sortClass = '.sort' + getSortNumberFromFilter(filter);
+      grid.filter('.sort' + getSortNumberFromFilter(filter));
 
-      grid.filter(sortClass);
-      
-      // フィルターごとにlightboxグループ名を変える（sceneなら group-scene など）
-      $('.grid .item').each(function () {
-        const $link = $(this).find('a');
-        
-        if ($this.hasClass('sort' + getSortNumberFromFilter(filter))) {
-          $link.attr('data-lightbox', 'group-' + filter);
-        } else {
-          $link.removeAttr('data-lightbox'); // 他のは表示対象外
-        }
-      });
+    // まず全部のgroupを一旦解除
+      $('.grid .item a').removeAttr('data-lightbox');
+
+    // 表示されてる要素にだけgroupを設定（フィルター後に表示されてるやつ）
+      $('.grid .item:visible a').attr('data-lightbox', 'group-' + filter);
     }
   });
 
