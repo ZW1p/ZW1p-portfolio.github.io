@@ -22,32 +22,27 @@ $(window).on('load', function () {
     const filter = $(this).data('filter'); //  "scene" など
 
     if (filter === 'all') {
-      grid.show();
-      
-      // 全アイテムに共通グループを設定
-      $('.grid .item a')
-        .attr('data-lightbox', 'group-all')
-        .removeAttr('data-title');
-      });
+      grid.show(); // すべて表示
     } else {
-      grid.filter('.sort' + getSortNumberFromFilter(filter),{
-      onFinish: () => {
-        // 一旦全部 group-all にリセット
-        $('.grid .item a').attr('data-lightbox', 'group-all');
+      // 各アイテムの class="item sort01" などに対応
+      grid.filter('.sort' + getSortNumberFromFilter(filter));
+    }
+  });
 
-        // 表示中アイテムだけ、フィルター専用グループに設定
-        const visibleItems = grid.getItems().filter(item => item.isVisible());
-        visibleItems.forEach(item => {
-          $(item.getElement()).find('a')
-            .attr('data-lightbox', 'group-' + filter);
-        });
-      }
-    });
+  // data-filter の値 → sortクラスに対応する番号を返す
+  function getSortNumberFromFilter(filter) {
+    switch (filter) {
+      case 'scene': return '01';
+      case 'plant': return '02';
+      case 'life':  return '03';
+      default:      return '00'; // all
+    }
   }
 });
-  
+
+$(function () {
   const pagetop = $('#page-top');
-  
+
   // 最初の判定：スクロール位置を見て表示/非表示
   if ($(window).scrollTop() > 800) {
     pagetop.show(); // ← show()で即表示（fadeだと一瞬消える）
@@ -70,14 +65,3 @@ $(window).on('load', function () {
     return false;
   });
 });
-
-// フィルターに対応する数字を返す補助関数
-function getSortNumberFromFilter(filter) {
-  switch (filter) {
-    case 'scene': return '01';
-    case 'animal': return '02';
-    case 'person': return '03';
-    // 必要に応じて他も追加してね
-    default: return '';
-  }
-}
