@@ -24,19 +24,21 @@ $(window).on('load', function () {
     if (filter === 'all') {
       grid.show();
       
-      // すべてのaタグに group-all を設定
-    $('.grid .item a').attr('data-lightbox', 'group-all');
+      // 全アイテムに共通グループを設定
+      $('.grid .item a').attr('data-lightbox', 'group-all');
     } else {
       grid.filter('.sort' + getSortNumberFromFilter(filter));
-
-    // まず全部のgroupを一旦解除
+      
+      // 一旦全ての data-lightbox を削除
       $('.grid .item a').removeAttr('data-lightbox');
-
-    // 表示されてる要素にだけgroupを設定（フィルター後に表示されてるやつ）
-      $('.grid .item:visible a').attr('data-lightbox', 'group-' + filter);
+      
+      // Muuri で表示されてる要素にだけ付け直す
+      const visibleItems = grid.getItems().filter(item => item.isVisible());
+      visibleItems.forEach(item => {
+        $(item.getElement()).find('a').attr('data-lightbox', 'group-' + filter);
+      });
     }
-  });
-
+    
   // data-filter の値 → sortクラスに対応する番号を返す
   function getSortNumberFromFilter(filter) {
     switch (filter) {
