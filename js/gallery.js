@@ -26,27 +26,25 @@ $(window).on('load', function () {
       
       // 全アイテムに共通グループを設定
       $('.grid .item a')
-    .attr('data-lightbox', 'group-all')
-    .removeAttr('data-title'); // おまけ（タイトルもリセット）
+        .attr('data-lightbox', 'group-all')
+        .removeAttr('data-title');
+    } else {
+      grid.filter('.sort' + getSortNumberFromFilter(filter));
+      const visibleItems = grid.getItems().filter(item => item.isVisible());
+      
+      // 一旦全部 group-all に戻す（全部リセット）
+      $('.grid .item a').attr('data-lightbox', 'group-all');
 
-} else {
-  grid.filter('.sort' + getSortNumberFromFilter(filter));
-
-  const visibleItems = grid.getItems().filter(item => item.isVisible());
-
-  // 一旦全部 group-all に戻す（全部リセット）
-  $('.grid .item a').attr('data-lightbox', 'group-all');
-
-  // 今表示されてるアイテムに group-filter をセット
-  visibleItems.forEach(item => {
-    $(item.getElement()).find('a')
-      .attr('data-lightbox', 'group-' + filter);
+      // 今表示されてるアイテムに group-filter をセット
+      visibleItems.forEach(item => {
+      $(item.getElement()).find('a')
+        .attr('data-lightbox', 'group-' + filter);
+      });
+    }
   });
-}
-
-$(function () {
+  
   const pagetop = $('#page-top');
-
+  
   // 最初の判定：スクロール位置を見て表示/非表示
   if ($(window).scrollTop() > 800) {
     pagetop.show(); // ← show()で即表示（fadeだと一瞬消える）
@@ -70,3 +68,13 @@ $(function () {
   });
 });
 
+// フィルターに対応する数字を返す補助関数
+function getSortNumberFromFilter(filter) {
+  switch (filter) {
+    case 'scene': return '01';
+    case 'animal': return '02';
+    case 'person': return '03';
+    // 必要に応じて他も追加してね
+    default: return '';
+  }
+}
